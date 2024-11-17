@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Список задач</h1>
+      <form method="post" action="/add/">
+    <input type="text" name="title" required placeholder="Введите название задачи">
+    <textarea name="description" required placeholder="Введите описание задачи"></textarea>
+    <button type="submit">Добавить</button>
+</form>
+
+        <ul>
+            {% for item in items %}
+            <li>
+                <form method="post" action="/edit/{{ item.id }}">
+                    <input type="text" name="title" value="{{ item.title }}" required>
+                    <textarea name="description" required>{{ item.description }}</textarea>
+                    <input type="checkbox" name="completed" {% if item.completed %}checked{% endif %}>
+                    <label>Выполнено</label>
+                    <button type="submit">Сохранить</button>
+                </form>
+                <form method="post" action="/delete/{{ item.id }}">
+                    <button type="submit">Удалить</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
